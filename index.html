@@ -1,0 +1,130 @@
+
+    <html>
+    <head>
+        <title>Quiz</title>
+        <link rel="stylesheet" href="style.css">
+        <!-- CSS de Bootstrap -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+        <!-- jQuery y JS de Bootstrap -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+       
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1>Irregular verbs by Cain 1st DAW IES L'ESTACIO</h1>
+                </div>
+            </div>
+        </div>
+    
+    
+    <div align="center" id="quiz-container">
+        <p id="total"></p>
+        <p id="score"></p>
+        <p id="question"></p>
+        <div>
+            <input type="radio" id="option1" name="option" value="">
+            <label for="option1"></label><br>
+            <input type="radio" id="option2" name="option" value="">
+            <label for="option2"></label><br>
+            <input type="radio" id="option3" name="option" value="">
+            <label for="option3"></label><br>
+        </div>
+        <button onclick="nextQuestion()">Next question</button>
+        <p id="feedback"></p>
+    </div>
+    <div id="quizModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="document.getElementById('quizModal').style.display = 'none'">&times;</span>
+            <p id="finalScore"></p>
+            <button onclick="resetQuiz()">Start Over</button>
+            <button onclick="document.getElementById('quizModal').style.display = 'none'">Exit</button>
+        </div>
+    </div>
+    <script>var currentQuestionIndex = 0;
+        var correctAnswers = 0;
+        var irregularVerbs = [
+            { base: 'go', past: 'went', participle: 'gone' },
+            { base: 'be', past: 'was/were', participle: 'been' },
+            { base: 'begin', past: 'began', participle: 'begun' },
+            // Agrega más verbos aquí
+        ];
+        
+        function generateQuestion() {
+            var randomIndex = Math.floor(Math.random() * irregularVerbs.length);
+            var verb = irregularVerbs[randomIndex];
+        
+            var questionPast = {
+                question: `What is the past tense of "${verb.base}"?`,
+                options: [verb.base, verb.past, verb.participle],
+                answer: verb.past
+            };
+        
+            var questionParticiple = {
+                question: `What is the past participle of "${verb.base}"?`,
+                options: [verb.base, verb.past, verb.participle],
+                answer: verb.participle
+            };
+        
+            questions.push(questionPast, questionParticiple);
+        }
+        
+        // Genera una nueva pregunta
+        var questions = [];
+        generateQuestion();
+        var totalQuestions = questions.length;
+        
+        function showQuestion() {
+            var questionElement = document.getElementById('question');
+            var currentQuestion = questions[currentQuestionIndex];
+
+            // Mostrar la pregunta
+            questionElement.textContent = currentQuestion.question;
+
+            // Mostrar las opciones
+            for (var i = 1; i <= currentQuestion.options.length; i++) {
+                var optionElement = document.getElementById('option' + i);
+                var labelElement = document.querySelector('label[for="option' + i + '"]');
+
+                optionElement.value = currentQuestion.options[i - 1];
+                labelElement.textContent = currentQuestion.options[i - 1];
+            }
+        }
+        
+        // Mostrar la primera pregunta al cargar la página
+        showQuestion();
+        
+        function nextQuestion() {
+            // Comprobar si la respuesta seleccionada es correcta
+            var selectedOption = document.querySelector('input[name="option"]:checked');
+            if (selectedOption && selectedOption.value === questions[currentQuestionIndex].answer) {
+                correctAnswers++;
+            }
+        
+            // Pasar a la siguiente pregunta
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                showQuestion();
+            } else {
+                // Mostrar el número de respuestas correctas al final del cuestionario
+                alert('Quiz finished! You got ' + correctAnswers + ' out of ' + questions.length + ' correct.');
+            }
+        }
+        
+        function resetQuiz() {
+            currentQuestionIndex = 0;
+            correctAnswers = 0;
+            showQuestion();
+            document.getElementById('quizModal').style.display = 'none';
+            document.getElementById('quiz-container').classList.remove('hide-content');
+        }
+        
+        document.addEventListener('DOMContentLoaded', (event) => {
+            generateQuestion();
+            showQuestion();
+        });</script>
+</body>
+    </html>
