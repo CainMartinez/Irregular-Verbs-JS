@@ -119,34 +119,42 @@ var currentQuestionIndex = 0;
                 answer: verb.participle
             };
         }
-        
-        // Genera una nueva pregunta
-        function getNumberOfQuestions() {
-            let inputNumber = Number(prompt("How many questions do you want to answer? (1-100)"));
+        // Obtén los elementos del DOM
+        var inputModal = document.getElementById('inputModal');
+        var inputConfirmButton = document.getElementById('inputConfirm');
+        var inputNumberElement = document.getElementById('inputNumber');
 
-            while (!Number.isInteger(inputNumber) || inputNumber < 1 || inputNumber > 100) {
-                inputNumber = Number(prompt("Please, enter an integer number between 1 and 100."));
-            }
-
-            return inputNumber;
-        }
-        
-        var numQuestionSets = getNumberOfQuestions(); 
         var questions = [];
+        var currentQuestionIndex = 0;
+        var correctAnswers = 0;
 
-        var questionGenerators = [generateQuestionSpanish, generateQuestionPast, generateQuestionParticiple];
+        // Agrega un controlador de eventos al botón de confirmación
+        inputConfirmButton.addEventListener('click', function() {
+            var inputNumber = Number(inputNumberElement.value);
 
-        for (var i = 0; i < numQuestionSets; i++) {
-            // Seleccionar una función de generación de preguntas aleatoria
-            var randomGenerator = questionGenerators[Math.floor(Math.random() * questionGenerators.length)];
+            if (!Number.isInteger(inputNumber) || inputNumber < 1 || inputNumber > 100) {
+                // Muestra un mensaje de error y no cierres el modal
+                alert("Please, enter an integer number between 1 and 100");
+            } else {
+                // Cierra el modal y continúa con tu código
+                inputModal.style.display = 'none';
 
-            // Generar una pregunta usando la función seleccionada
-            var question = randomGenerator();
+                var numQuestionSets = inputNumber; 
+                var questionGenerators = [generateQuestionSpanish, generateQuestionPast, generateQuestionParticiple];
 
-            // Agregar la pregunta al array de preguntas
-            questions.push(question);
-        }
-        var totalQuestions = questions.length;
+                for (var i = 0; i < numQuestionSets; i++) {
+                    var randomGenerator = questionGenerators[Math.floor(Math.random() * questionGenerators.length)];
+                    var question = randomGenerator();
+                    questions.push(question);
+                }
+
+                // Mostrar la primera pregunta
+                showQuestion();
+            }
+        });
+
+        // Muestra el modal al usuario
+        inputModal.style.display = 'block';
 
         function showQuestion() {
             var selectedOption = document.querySelector('input[name="option"]:checked');
@@ -169,17 +177,14 @@ var currentQuestionIndex = 0;
                 labelElement.textContent = currentQuestion.options[i - 1];
             }
         }
-        
-        // Mostrar la primera pregunta al cargar la página
-        showQuestion();
-        
+
         function nextQuestion() {
             // Comprobar si la respuesta seleccionada es correcta
             var selectedOption = document.querySelector('input[name="option"]:checked');
             if (selectedOption && selectedOption.value === questions[currentQuestionIndex].answer) {
                 correctAnswers++;
             }
-        
+
             // Pasar a la siguiente pregunta
             currentQuestionIndex++;
             if (currentQuestionIndex < questions.length) {
@@ -189,7 +194,6 @@ var currentQuestionIndex = 0;
                 alert('Quiz finished! You got ' + correctAnswers + ' out of ' + questions.length + ' correct.');
             }
         }
-        // Resto del código...
 
         // Controlador de eventos para el botón de reinicio
         $('#resetButton').on('click', function() {
@@ -198,24 +202,6 @@ var currentQuestionIndex = 0;
             currentQuestionIndex = 0;
             correctAnswers = 0;
 
-            // Pedir al usuario que introduzca el número de preguntas
-            let inputNumber = Number(prompt("How many questions do you want to answer? (1-100)"));
-
-            while (!Number.isInteger(inputNumber) || inputNumber < 1 || inputNumber > 100) {
-                alert("Please, enter an integer number between 1 and 100");
-                inputNumber = Number(prompt("How many questions do you want to answer? (1-100)"));
-            }
-
-            var numQuestionSets = inputNumber; 
-
-            var questionGenerators = [generateQuestionSpanish, generateQuestionPast, generateQuestionParticiple];
-
-            for (var i = 0; i < numQuestionSets; i++) {
-                var randomGenerator = questionGenerators[Math.floor(Math.random() * questionGenerators.length)];
-                var question = randomGenerator();
-                questions.push(question);
-            }
-
-            // Mostrar la primera pregunta
-            showQuestion();
+            // Muestra el modal al usuario
+            inputModal.style.display = 'block';
         });
