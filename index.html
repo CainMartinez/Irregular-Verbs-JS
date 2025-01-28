@@ -145,34 +145,34 @@
 					<div class="row bs-wizard animate-box" style="border-bottom:0;">
 						<div class="d-flex align-items-center justify-content-center" style="height: 100vh;">
 							<div class="text-center">
-								<div class="card d-flex justify-content-center my-5">
+								<div id="counters" class="my-3">
+									<p id="correctCounter" style="font-size: 3.5rem; font-weight: bold; color: #28a745;">✔ Correct Answers: 0</p>
+									<p id="incorrectCounter" style="font-size: 3.5rem; font-weight: bold; color: #dc3545;">✘ Incorrect Answers: 0</p>
+								</div>
+								<div class="card d-flex justify-content-center my-5 p-4 shadow-lg" style="border-radius: 1rem; background: linear-gradient(145deg, #f3f4f6, #ffffff);">
 									<div>
 										<p id="total" class="card-text"></p>
-										<p id="score" class="card-text"></p>
-										<p id="question" class="card-text"></p>
-										<div class="form-check">
-											<input class="form-check-input" type="radio" id="option1" name="option"
-												value="">
-											<label class="form-check-label" for="option1"></label>
+										<p id="score" class="card-text"></p><br><br>
+										<p id="question" class="card-text" style="font-size: 3.8rem; font-weight: bold; margin-bottom: 20px;"></p>
+										<div class="form-check mb-3">
+											<input class="form-check-input" type="radio" id="option1" name="option" value="" style="transform: scale(1.5); margin-right: 10px;">
+											<label class="form-check-label" for="option1" style="font-size: 3.2rem;">Option 1</label>
 										</div>
-										<div class="form-check">
-											<input class="form-check-input" type="radio" id="option2" name="option"
-												value="">
-											<label class="form-check-label" for="option2"></label>
+										<div class="form-check mb-3">
+											<input class="form-check-input" type="radio" id="option2" name="option" value="" style="transform: scale(1.5); margin-right: 10px;">
+											<label class="form-check-label" for="option2" style="font-size: 3.2rem;">Option 2</label>
 										</div>
-										<div class="form-check">
-											<input class="form-check-input" type="radio" id="option3" name="option"
-												value="">
-											<label class="form-check-label" for="option3"></label>
-										</div>
-										<button class="btn btn-primary mt-3" onclick="nextQuestion()">Next
-											question</button>
-										<button class="btn btn-danger mt-3" id="resetButton">Restart Again</button>
-										<p id="feedback" class="card-text mt-3"></p>
+										<div class="form-check mb-3">
+											<input class="form-check-input" type="radio" id="option3" name="option" value="" style="transform: scale(1.5); margin-right: 10px;">
+											<label class="form-check-label" for="option3" style="font-size: 3.2rem;">Option 3</label>
+										</div><br>
+										<button class="btn btn-primary mt-3 px-4 py-2" onclick="nextQuestion()" style="border-radius: 2rem; font-size: 1.2rem;">Next Question</button><br>
+										<button class="btn btn-danger mt-3 px-4 py-2" id="resetButton" style="border-radius: 2rem; font-size: 1.2rem;">Restart Again</button>
+										<p id="feedback" class="card-text mt-3" style="font-size: 3.2rem; color: #6c757d;"></p>
 									</div>
 									<hr>
 								</div>
-							</div>
+							</div>							
 						</div>
 					</div>
 				</div>
